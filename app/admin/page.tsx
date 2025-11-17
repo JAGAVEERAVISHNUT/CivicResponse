@@ -155,10 +155,10 @@ export default function AdminDashboardPage() {
     <div className="min-h-screen bg-background">
       <NavHeader userName={profile.full_name} role={profile.role} />
       
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-          <p className="text-muted-foreground">
+      <div className="container mx-auto px-4 py-6 sm:py-8 max-w-full overflow-hidden">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-balance">Admin Dashboard</h1>
+          <p className="text-sm sm:text-base text-muted-foreground text-balance">
             System overview and management console
           </p>
         </div>
@@ -174,11 +174,13 @@ export default function AdminDashboardPage() {
           officers={users.filter(u => u.role === 'l1_officer' || u.role === 'l2_officer').length}
         />
 
-        <Tabs defaultValue="issues" className="w-full mt-8">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
-            <TabsTrigger value="issues">Issues Management</TabsTrigger>
-            <TabsTrigger value="users">Users Management</TabsTrigger>
-          </TabsList>
+        <Tabs defaultValue="issues" className="w-full mt-6 sm:mt-8">
+          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <TabsList className="grid w-full max-w-md grid-cols-2 min-w-[300px]">
+              <TabsTrigger value="issues" className="text-sm">Issues Management</TabsTrigger>
+              <TabsTrigger value="users" className="text-sm">Users Management</TabsTrigger>
+            </TabsList>
+          </div>
           
           <TabsContent value="issues" className="mt-6">
             <AdminIssuesTable issues={issues} />

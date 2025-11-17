@@ -61,12 +61,12 @@ export function NavHeader({ userName, role }: NavHeaderProps) {
 
   return (
     <header className="border-b bg-background">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link href={getHomeUrl()} className="text-xl font-bold">
+      <div className="container mx-auto px-4 h-auto min-h-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 py-3 sm:py-0">
+        <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
+          <Link href={getHomeUrl()} className="text-lg sm:text-xl font-bold truncate">
             CivicResponse
           </Link>
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
             <Link href={getHomeUrl()}>
               <Home className="h-4 w-4 mr-2" />
               Home
@@ -74,14 +74,14 @@ export function NavHeader({ userName, role }: NavHeaderProps) {
           </Button>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto justify-between sm:justify-end flex-wrap">
           {role === 'citizen' && (
             <Button variant="ghost" size="sm" asChild className="relative">
               <Link href="/citizen/requests">
-                <Bell className="h-4 w-4 mr-2" />
-                Requests
+                <Bell className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Requests</span>
                 {pendingRequestsCount > 0 && (
-                  <Badge className="ml-2 bg-orange-600 hover:bg-orange-700 h-5 min-w-5 flex items-center justify-center p-1">
+                  <Badge className="ml-1 sm:ml-2 bg-orange-600 hover:bg-orange-700 h-5 min-w-5 flex items-center justify-center p-1">
                     {pendingRequestsCount}
                   </Badge>
                 )}
@@ -90,7 +90,7 @@ export function NavHeader({ userName, role }: NavHeaderProps) {
           )}
           
           {role === 'admin' && (
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
               <Link href="/admin/sla-monitor">
                 <Shield className="h-4 w-4 mr-2" />
                 SLA Monitor
@@ -98,16 +98,16 @@ export function NavHeader({ userName, role }: NavHeaderProps) {
             </Button>
           )}
           
-          <div className="flex items-center gap-2 text-sm">
-            <User className="h-4 w-4 text-muted-foreground" />
-            <div className="flex flex-col">
-              <span className="font-medium">{userName}</span>
-              <span className="text-xs text-muted-foreground capitalize">{role.replace('_', ' ')}</span>
+          <div className="flex items-center gap-2 text-sm min-w-0">
+            <User className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+            <div className="flex flex-col min-w-0">
+              <span className="font-medium truncate max-w-[120px] sm:max-w-none">{userName}</span>
+              <span className="text-xs text-muted-foreground capitalize truncate">{role.replace('_', ' ')}</span>
             </div>
           </div>
-          <Button variant="ghost" size="sm" onClick={handleLogout}>
-            <LogOut className="h-4 w-4 mr-2" />
-            Logout
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="flex-shrink-0">
+            <LogOut className="h-4 w-4 sm:mr-2" />
+            <span className="hidden sm:inline">Logout</span>
           </Button>
         </div>
       </div>

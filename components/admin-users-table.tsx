@@ -60,14 +60,14 @@ export function AdminUsersTable({ users, onCreateUser, onEditUser, onDeleteUser,
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="min-w-0">
             <CardTitle>All Users</CardTitle>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-muted-foreground mt-1 text-balance">
               Citizens: {citizenCount} | L1 Officers: {l1Count} | L2 Officers: {l2Count} | Admins: {adminCount} (max 2)
             </p>
           </div>
-          <Button onClick={onCreateUser}>
+          <Button onClick={onCreateUser} className="flex-shrink-0 w-full sm:w-auto">
             <UserPlus className="h-4 w-4 mr-2" />
             Create Officer
           </Button>
@@ -97,83 +97,85 @@ export function AdminUsersTable({ users, onCreateUser, onEditUser, onDeleteUser,
         </div>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Phone</TableHead>
-                <TableHead>Joined</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredUsers.length === 0 ? (
+        <div className="overflow-x-auto -mx-6 px-6">
+          <div className="rounded-md border min-w-[800px]">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
-                    No users found
-                  </TableCell>
+                  <TableHead className="min-w-[150px]">Name</TableHead>
+                  <TableHead className="min-w-[180px]">Email</TableHead>
+                  <TableHead className="min-w-[100px]">Role</TableHead>
+                  <TableHead className="min-w-[120px]">Department</TableHead>
+                  <TableHead className="min-w-[100px]">Phone</TableHead>
+                  <TableHead className="min-w-[100px]">Joined</TableHead>
+                  <TableHead className="text-right min-w-[120px]">Actions</TableHead>
                 </TableRow>
-              ) : (
-                filteredUsers.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell className="font-medium">{user.full_name}</TableCell>
-                    <TableCell className="text-sm text-muted-foreground">{user.email}</TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className={getRoleBadgeColor(user.role)}>
-                        {formatRole(user.role)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {user.department || '-'}
-                    </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {user.phone || '-'}
-                    </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {format(new Date(user.created_at), 'MMM dd, yyyy')}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {user.role !== 'admin' && (
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => onPromoteToAdmin(user)}
-                            disabled={!canPromoteToAdmin}
-                            title={canPromoteToAdmin ? 'Promote to Admin' : 'Admin limit reached (2 max)'}
-                          >
-                            <Shield className="h-4 w-4 text-orange-600" />
-                          </Button>
-                          {(user.role === 'l1_officer' || user.role === 'l2_officer') && (
-                            <>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => onEditUser(user)}
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => onDeleteUser(user)}
-                              >
-                                <Trash2 className="h-4 w-4 text-destructive" />
-                              </Button>
-                            </>
-                          )}
-                        </div>
-                      )}
+              </TableHeader>
+              <TableBody>
+                {filteredUsers.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
+                      No users found
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : (
+                  filteredUsers.map((user) => (
+                    <TableRow key={user.id}>
+                      <TableCell className="font-medium">{user.full_name}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">{user.email}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className={getRoleBadgeColor(user.role)}>
+                          {formatRole(user.role)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {user.department || '-'}
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {user.phone || '-'}
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {format(new Date(user.created_at), 'MMM dd, yyyy')}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {user.role !== 'admin' && (
+                          <div className="flex justify-end gap-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => onPromoteToAdmin(user)}
+                              disabled={!canPromoteToAdmin}
+                              title={canPromoteToAdmin ? 'Promote to Admin' : 'Admin limit reached (2 max)'}
+                            >
+                              <Shield className="h-4 w-4 text-orange-600" />
+                            </Button>
+                            {(user.role === 'l1_officer' || user.role === 'l2_officer') && (
+                              <>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => onEditUser(user)}
+                                >
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => onDeleteUser(user)}
+                                >
+                                  <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </div>
         <p className="text-sm text-muted-foreground mt-4">
           Showing {filteredUsers.length} of {users.length} users

@@ -107,23 +107,23 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10 bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div className="flex min-h-svh w-full items-center justify-center p-4 sm:p-6 md:p-10 bg-gradient-to-br from-blue-50 to-indigo-50">
       <div className="w-full max-w-sm">
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-3xl font-bold text-balance">CivicResponse</h1>
-            <p className="text-muted-foreground text-balance">
+        <div className="flex flex-col gap-4 sm:gap-6">
+          <div className="flex flex-col items-center gap-2 text-center px-4">
+            <h1 className="text-2xl sm:text-3xl font-bold text-balance">CivicResponse</h1>
+            <p className="text-sm sm:text-base text-muted-foreground text-balance">
               Report and track civic issues in your community
             </p>
           </div>
           <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">Login</CardTitle>
-              <CardDescription>
+            <CardHeader className="space-y-1 px-4 sm:px-6">
+              <CardTitle className="text-xl sm:text-2xl">Login</CardTitle>
+              <CardDescription className="text-sm">
                 Enter your credentials to access your account
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-4 sm:px-6">
               <form onSubmit={handleLogin}>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">

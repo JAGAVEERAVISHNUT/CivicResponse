@@ -74,63 +74,65 @@ export function AdminIssuesTable({ issues }: AdminIssuesTableProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Priority</TableHead>
-                <TableHead>Reporter</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredIssues.length === 0 ? (
+        <div className="overflow-x-auto -mx-6 px-6">
+          <div className="rounded-md border min-w-[800px]">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
-                    No issues found
-                  </TableCell>
+                  <TableHead className="min-w-[200px]">Title</TableHead>
+                  <TableHead className="min-w-[120px]">Category</TableHead>
+                  <TableHead className="min-w-[120px]">Status</TableHead>
+                  <TableHead className="min-w-[100px]">Priority</TableHead>
+                  <TableHead className="min-w-[120px]">Reporter</TableHead>
+                  <TableHead className="min-w-[100px]">Created</TableHead>
+                  <TableHead className="min-w-[80px]"></TableHead>
                 </TableRow>
-              ) : (
-                filteredIssues.map((issue) => (
-                  <TableRow key={issue.id}>
-                    <TableCell className="font-medium max-w-xs">
-                      <div className="truncate">{issue.title}</div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline">{formatCategory(issue.category)}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge className={`${getStatusColor(issue.status)} border`}>
-                        {formatStatus(issue.status)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className={getPriorityColor(issue.priority)}>
-                        {formatPriority(issue.priority)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {issue.reporter?.full_name || 'Unknown'}
-                    </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {format(new Date(issue.created_at), 'MMM dd, yyyy')}
-                    </TableCell>
-                    <TableCell>
-                      <Button variant="ghost" size="sm" asChild>
-                        <Link href={`/admin/issues/${issue.id}`}>
-                          View
-                        </Link>
-                      </Button>
+              </TableHeader>
+              <TableBody>
+                {filteredIssues.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
+                      No issues found
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : (
+                  filteredIssues.map((issue) => (
+                    <TableRow key={issue.id}>
+                      <TableCell className="font-medium max-w-xs">
+                        <div className="truncate">{issue.title}</div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{formatCategory(issue.category)}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge className={`${getStatusColor(issue.status)} border`}>
+                          {formatStatus(issue.status)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className={getPriorityColor(issue.priority)}>
+                          {formatPriority(issue.priority)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {issue.reporter?.full_name || 'Unknown'}
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {format(new Date(issue.created_at), 'MMM dd, yyyy')}
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="ghost" size="sm" asChild>
+                          <Link href={`/admin/issues/${issue.id}`}>
+                            View
+                          </Link>
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </div>
         <p className="text-sm text-muted-foreground mt-4">
           Showing {filteredIssues.length} of {issues.length} issues
